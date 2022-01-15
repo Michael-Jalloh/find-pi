@@ -8,20 +8,22 @@ print('Please enter your network address')
 print('Example:')
 print('	192.168.0.1')
 ip = input('>>> ')
-first,second,third,fourth = ip.split('.')
+ip = ip.split('.')
 print(ip)
-ip = first+'.'+second+'.'+third+'.'
+ip = ip[0]+'.'+ip[1]+'.'+ip[2]+'.'
 print(ip)
 
 def recv(client):
 	try:
 		data,addr = client.recvfrom(1024)
 		return (data, addr)
+	except KeyboardInterrupt:
+		exit()
 	except:
 		return (None,None)
 i = 1
 while i < 255:
-	client.sendto('raspberrypi',(ip + str(i),9000))
+	client.sendto(b'raspberrypi',(ip + str(i),9000))
 	print(ip,str(i))
 	i += 1
 	data,addr = recv(client)
