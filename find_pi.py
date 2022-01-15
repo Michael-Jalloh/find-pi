@@ -21,13 +21,13 @@ def recv(client):
 		exit()
 	except:
 		return (None,None)
-i = 1
+i = 100
 while i < 255:
 	client.sendto(b'raspberrypi',(ip + str(i),9000))
 	print(ip,str(i))
 	i += 1
 	data,addr = recv(client)
-	if data == 'raspberrypi':
+	if data == b'raspberrypi':
 		print('Raspberry pi @', addr[0])
 		fob = open('raspberrypi.txt','w')
 		fob.write(addr[0]+'\n')
