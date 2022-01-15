@@ -2,16 +2,17 @@ from socket import *
 
 client = socket(AF_INET, SOCK_DGRAM)
 client.settimeout(1)
-print client.gettimeout()
+print(client.gettimeout())
 
-print 'Please enter your network address'
-print 'Example:'
-print '	192.168.0.1'
-ip = raw_input('>>> ')
+print('Please enter your network address')
+print('Example:')
+print('	192.168.0.1')
+ip = input('>>> ')
 first,second,third,fourth = ip.split('.')
-print ip
+print(ip)
 ip = first+'.'+second+'.'+third+'.'
-print ip
+print(ip)
+
 def recv(client):
 	try:
 		data,addr = client.recvfrom(1024)
@@ -20,18 +21,19 @@ def recv(client):
 		return (None,None)
 i = 1
 while i < 255:
-	client.sendto('raspberrypi',(ip+`i`,9000))
-	print ip+`i`
+	client.sendto('raspberrypi',(ip + str(i),9000))
+	print(ip,str(i))
 	i += 1
 	data,addr = recv(client)
 	if data == 'raspberrypi':
-		print 'Raspberry pi @', addr[0]
+		print('Raspberry pi @', addr[0])
 		fob = open('raspberrypi.txt','w')
 		fob.write(addr[0]+'\n')
 		fob.close()
 		break
+
 if data == 'None':
-	print 'No raspberrypi found on your network'
+	print('No raspberrypi found on your network')
 
 		
 	
